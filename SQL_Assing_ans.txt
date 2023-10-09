@@ -1,0 +1,50 @@
+Question 1: Find Top 5 Product based on their SaleValue for the Month of August in Year 1996
+
+*** select products.productName,products.price,Orders.OrderDate from orders 
+inner join OrderDetails
+on orders.OrderID=OrderDetails.OrderID
+inner join products 
+on products.ProductID=OrderDetails.ProductID order by products.price desc where Orders.OrderDate=1996-08 ;
+
+Question 2: Find Top 5 Product based on their SaleValue. Display all information of Product including category details, 
+supplier details and TotalSalesValue(Exclude all Id columns except for Product).
+
+Ans :- select products.ProductName,products.Price,Categories.CategoryName,Categories.Description,
+Suppliers.SupplierName,Suppliers.ContactName,Suppliers.Address,Suppliers.City,
+Suppliers.PostalCode,Suppliers.Country,Suppliers.Phone from products
+join Categories
+on products.CategoryID=Categories.CategoryID
+join Suppliers
+on products.SupplierID=Suppliers.SupplierID
+order by products.Price desc limit 5;
+
+Question 3: Find Top 5 Supplier based on their Sales Value. Display all Information of supplier and their sale value.
+Ans:- select products.price,Suppliers.SupplierName,Suppliers.ContactName,Suppliers.Address,Suppliers.City,
+Suppliers.PostalCode,Suppliers.Country,Suppliers.Phone from products
+join Suppliers
+on products.SupplierID=Suppliers.SupplierID
+order by  products.price desc
+limit 5;
+
+Question 4: Find Top 5 Employees based on number of order they handled. Display all information of employees with order count.
+Ans :- select Employees.EmployeeID,Employees.LastName,Employees.FirstName,Employees.BirthDate,Employees.Photo,
+Orders.OrderID,sum(OrderDetails.Quantity) as order_qunt from Employees
+join Orders
+on Employees.EmployeeID=Orders.EmployeeID
+join OrderDetails
+on Orders.OrderID=OrderDetails.OrderID
+group by Orders.OrderID
+order by order_qunt desc
+limit 5;
+
+
+Question 5: Find all information of shippers with their order delivery count.
+Ans:- select Shippers.ShipperID,Shippers.ShipperName,Shippers.Phone,Orders.OrderID,count(OrderDetails.OrderDetailID) as order_count from Shippers
+join orders
+on Shippers.ShipperID=orders.ShipperID
+join OrderDetails
+on OrderDetails.OrderID=orders.OrderID	
+group by Shippers.ShipperID;
+
+
+Question 6: Find Top 5 Customers for Beverages based on their total purchase value.
